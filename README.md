@@ -1,3 +1,3 @@
 刷bjjnts.cn网课TamperMonkey脚本，根据网上老版本改的。
-
-需要Chrome浏览器+TamperMonkey扩展
+已在Chrome/FireFox浏览器验证可用。
+均需先安装TamperMonkey扩展
