@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         ±±¾©ÊĞÖ°Òµ¼¼ÄÜÌáÉıĞĞ¶¯¹ÜÀíÆ½Ì¨¿Î³Ì×Ô¶¯²¥·Å¡¢Ìø¹ıÈËÁ³¡¢×Ô¶¯È·¶¨
+// @name         åŒ—äº¬å¸‚èŒä¸šæŠ€èƒ½æå‡è¡ŒåŠ¨ç®¡ç†å¹³å°è¯¾ç¨‹è‡ªåŠ¨æ’­æ”¾ã€è·³è¿‡äººè„¸ã€è‡ªåŠ¨ç¡®å®š
 // @version      0.3
 // @author       staugur
 // @match        https://www.bjjnts.cn/lessonStudy/*
@@ -19,14 +19,14 @@
     }
 
     function getCurrentTime() {
-        var date = new Date(); //µ±Ç°Ê±¼ä
-        var month = zeroFill(date.getMonth() + 1); //ÔÂ
-        var day = zeroFill(date.getDate()); //ÈÕ
-        var hour = zeroFill(date.getHours()); //Ê±
-        var minute = zeroFill(date.getMinutes()); //·Ö
-        var second = zeroFill(date.getSeconds()); //Ãë
+        var date = new Date(); //å½“å‰æ—¶é—´
+        var month = zeroFill(date.getMonth() + 1); //æœˆ
+        var day = zeroFill(date.getDate()); //æ—¥
+        var hour = zeroFill(date.getHours()); //æ—¶
+        var minute = zeroFill(date.getMinutes()); //åˆ†
+        var second = zeroFill(date.getSeconds()); //ç§’
 
-        //µ±Ç°Ê±¼ä
+        //å½“å‰æ—¶é—´
         var curTime = date.getFullYear() + "-" + month + "-" + day +
             " " + hour + ":" + minute + ":" + second;
 
@@ -39,24 +39,24 @@
     $('.change_chapter').each((i, o) => {
         if (current) return
         var txt = $(o).find('span').text()
-        var mch = /ÒÑÍê³É\s*([\d.]+)%/.exec(txt)
-        if (mch) console.log(`µÚ${i + 1}½Ú¿Î£¬½ø¶È=${mch[1]}%`)
+        var mch = /å·²å®Œæˆ\s*([\d.]+)%/.exec(txt)
+        if (mch) console.log(`ç¬¬${i + 1}èŠ‚è¯¾ï¼Œè¿›åº¦=${mch[1]}%`)
         if (mch && +mch[1] < 100) {
             current = $(o)
             progress = +mch[1]
         }
     })
     if (current) current.click()
-    if (!current) console.log('Ã»ÕÒµ½¿É¿ªÊ¼µÄ¿Î³Ì£¬ÇëÊÖ¶¯²Ù×÷')
+    if (!current) console.log('æ²¡æ‰¾åˆ°å¯å¼€å§‹çš„è¯¾ç¨‹ï¼Œè¯·æ‰‹åŠ¨æ“ä½œ')
 
     var v = window.video || document.getElementById("studymovie")
     if (progress) setTimeout(() => {
-        v.currentTime = (v.duration * progress) - 5 // Ìø½ø¶È
+        v.currentTime = (v.duration * progress) / 100 - 2 // è·³è¿›åº¦
     }, 2000)
 
     v.onended = function () {
         if (v.currentTime < v.duration) return
-        console.log("Ë¢ĞÂÒ³Ãæ½øÈëÏÂÒ»¸ö¿Î³Ì @ " + getCurrentTime());
+        console.log("åˆ·æ–°é¡µé¢è¿›å…¥ä¸‹ä¸€ä¸ªè¯¾ç¨‹ @ " + getCurrentTime());
         location.reload()
     }
 
@@ -65,10 +65,10 @@
         var btn = document.querySelector(".layui-layer-dialog .layui-layer-btn .layui-layer-btn0");
         if (btn) {
             btn.click();
-            console.log("×Ô¶¯µã»÷°´Å¥ @ " + getCurrentTime());
+            console.log("è‡ªåŠ¨ç‚¹å‡»æŒ‰é’® @ " + getCurrentTime());
         }
         if (v.paused) {
-            console.log("×Ô¶¯ÖØĞÂ²¥·Å @ " + getCurrentTime());
+            console.log("è‡ªåŠ¨é‡æ–°æ’­æ”¾ @ " + getCurrentTime());
             v.play();
         }
     }, 2000);
