@@ -33,7 +33,7 @@
 
     window.face_monitor = function () {}
 
-    var current, progress;
+    var current;
     $('.change_chapter').each((i, o) => {
         if (current) return
         var txt = $(o).find('span').text()
@@ -41,34 +41,38 @@
         if (mch) console.log(`第${i + 1}节课，进度=${mch[1]}%`)
         if (mch && +mch[1] < 100) {
             current = $(o)
-            progress = +mch[1]
+            window.__progress = +mch[1]
         }
     })
-    if (current) current.click()
-    if (!current) console.log('没找到可开始的课程，请手动操作')
+    setTimeout(() => {
+        if (current) current.click()
+        if (!current || !video) console.log('没找到可开始的课程，请手动操作')
 
-    if (progress) {
-        setTimeout(() => {
-            video.currentTime = (video.duration * progress) / 100 - 2 // 跳进度
-        }, 2000)
-    }
-
-    video.onended = function () {
-        if (video.currentTime < video.duration) return
-        console.log("刷新页面进入下一个课程 @ " + getCurrentTime());
-        location.reload()
-    }
-
-    setInterval(function () {
-        $('.face_recogn').hide();
-        var btn = document.querySelector(".layui-layer-dialog .layui-layer-btn .layui-layer-btn0");
-        if (btn) {
-            btn.click();
-            console.log("自动点击按钮 @ " + getCurrentTime());
+        video.onplaying = function () {
+            console.log(">>>", video.duration, __progress, video.currentTime)
+            if (!video.duration || !__progress || video.currentTime > (video.duration * __progress) / 100 - 5) return
+            var newprogress = (video.duration * __progress) / 100 - 1
+            console.log("跳到当前课程的进度" + newprogress + " @ " + getCurrentTime());
+            video.currentTime = newprogress
         }
-        if (video.paused) {
-            console.log("自动重新播放 @ " + getCurrentTime());
-            video.play();
+
+        video.onended = function () {
+            if (video.currentTime < video.duration) return
+            console.log("刷新页面进入下一个课程 @ " + getCurrentTime());
+            location.reload()
         }
-    }, 3000);
+
+        setInterval(function () {
+            $('.face_recogn').hide();
+            var btn = document.querySelector(".layui-layer-dialog .layui-layer-btn .layui-layer-btn0");
+            if (btn) {
+                btn.click();
+                console.log("自动点击按钮 @ " + getCurrentTime());
+            }
+            if (video.paused) {
+                console.log("自动重新播放 @ " + getCurrentTime());
+                video.play();
+            }
+        }, 3000);
+    }, 2000)
 })();
