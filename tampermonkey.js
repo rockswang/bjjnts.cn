@@ -1,10 +1,8 @@
 // ==UserScript==
 // @name         北京市职业技能提升行动管理平台课程自动播放、跳过人脸、自动确定
-// @version      0.3
-// @author       staugur
+// @version      0.3.5
 // @match        https://www.bjjnts.cn/lessonStudy/*
 // @grant        none
-// @updateURL   https://static.saintic.com/cdn/autoclick.bjjnts.user.js
 // ==/UserScript==
 
 (function () {
@@ -49,13 +47,14 @@
     if (current) current.click()
     if (!current) console.log('没找到可开始的课程，请手动操作')
 
-    var v = window.video || document.getElementById("studymovie")
-    if (progress) setTimeout(() => {
-        v.currentTime = (v.duration * progress) / 100 - 2 // 跳进度
-    }, 2000)
+    if (progress) {
+        setTimeout(() => {
+            video.currentTime = (video.duration * progress) / 100 - 2 // 跳进度
+        }, 2000)
+    }
 
-    v.onended = function () {
-        if (v.currentTime < v.duration) return
+    video.onended = function () {
+        if (video.currentTime < video.duration) return
         console.log("刷新页面进入下一个课程 @ " + getCurrentTime());
         location.reload()
     }
@@ -67,9 +66,9 @@
             btn.click();
             console.log("自动点击按钮 @ " + getCurrentTime());
         }
-        if (v.paused) {
+        if (video.paused) {
             console.log("自动重新播放 @ " + getCurrentTime());
-            v.play();
+            video.play();
         }
-    }, 2000);
+    }, 3000);
 })();
