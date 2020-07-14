@@ -63,15 +63,22 @@
         }
 
         setInterval(function () {
-            $('.face_recogn').hide();
+            //$('.face_recogn').hide();
             var btn = document.querySelector(".layui-layer-dialog .layui-layer-btn .layui-layer-btn0");
+            var faceBtn = document.getElementById("face_startbtn");
+            var faceDivStyle = document.querySelector(".face_recogn").style["display"];
             if (btn) {
                 btn.click();
                 console.log("自动点击按钮 @ " + getCurrentTime());
             }
             if (video.paused) {
-                console.log("自动重新播放 @ " + getCurrentTime());
-                video.play();
+                if (faceDivStyle != "none") {
+                    faceBtn.click();
+                    console.log("自动点击按钮（关掉div） @ " + getCurrentTime());
+                } else {
+                    console.log("自动重新播放 @ " + getCurrentTime());
+                    video.play();
+                }
             }
         }, 3000);
     }, 2000)
