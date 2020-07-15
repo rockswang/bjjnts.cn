@@ -63,7 +63,10 @@
         }
 
         setInterval(function () {
-            $('.face_recogn').hide();
+            if ($('.face_recogn').is(':visible')) {
+                $('.face_recogn').find('button').click()
+                $('.face_recogn').hide()
+            }
             var btn = document.querySelector(".layui-layer-dialog .layui-layer-btn .layui-layer-btn0");
             if (btn) {
                 btn.click();
